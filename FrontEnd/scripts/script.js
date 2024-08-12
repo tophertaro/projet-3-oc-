@@ -31,3 +31,41 @@ export async function fetchWorks() {
         console.error(error)
       }
 }
+
+// (1.1) DISPLAY PROJETS ARCHITECTE
+
+export function displayWorks(works) { 
+  let gallery = document.getElementById('gallery-js'); 
+  gallery.innerHTML =''; //supprime le contenu html dans la div gallery-js
+  
+
+  let galleryContent = ''; //la variable va contenir le code html pour chaque travail généré
+  works.forEach(work => {
+    galleryContent += 
+    ` <figure>
+        <img src="${work.imageUrl}" alt="${work.title}"
+        <figcaption>${work.title}</figcaption>
+      </figure>
+    `;
+  });
+  gallery.innerHTML = galleryContent; //valeur de galleryContent inséré dans le HTML class gallery
+
+  /* Méthode alternatif
+  works.forEach(work => {
+    const figure = document.createElement('figure')
+
+    const img = document.createElement('img')
+      img.src = work.imageUrl;
+      img.alt = work.title;
+
+
+    const figcaption = document.createElement('figcaption')
+      figcaption.textContent = work.title
+
+
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
+      gallery.appendChild(figure);
+});*/
+
+}
