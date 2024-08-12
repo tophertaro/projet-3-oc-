@@ -51,3 +51,18 @@ function createModal() {
   // Ajout de la modale dans le corps du document
   document.body.appendChild(modal);
 }
+
+// OUVERTURE & FERMETURE MODAL
+
+document.addEventListener("DOMContentLoaded", function () {
+  createModal();
+
+  // Ouverture de la modale lorsqu'on clique sur le bouton "Modifier"
+  document.getElementById("edit-projects").onclick = function () {
+    modal.showModal();
+    // On affiche la galerie.
+    displayWorksInModal(data.works);
+  };
+  // fermeture de la modale
+  closeButton.onclick = () => modal.close();
+});
