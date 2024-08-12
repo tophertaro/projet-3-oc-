@@ -10,6 +10,24 @@ document.addEventListener('DOMContentLoaded', async function() {
   fetchCategories();
 });
 
+// (1.2) FETCH CATEGORIES
+
+export async function fetchCategories() {
+  try {
+    const response = await fetch ('http://localhost:5678/api/categories');
+
+      if(!response.ok) {
+        throw new Error('Could not fetch categories')
+      } else {
+        data.categories = await response.json()
+        createFilters(data.categories); //appel à la fonction permettant la génération des boutons
+      }
+  }
+  catch (error) {
+    console.error(error);
+  }
+}
+
 
 
 
