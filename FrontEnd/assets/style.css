@@ -23,6 +23,9 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+html body {
+	height: 100vh;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -56,7 +59,8 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin-bottom: 50px;
+	margin-top: 30px;
 }
 section {
 	margin: 50px 0
@@ -93,6 +97,11 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	cursor: pointer;
+}
+
+#login-btn a {
+	color: black;
 }
 
 li:hover {
@@ -131,6 +140,7 @@ li:hover {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
+	margin-top: 30px;
 }
 
 .gallery img {
@@ -155,7 +165,7 @@ margin: auto;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input, #login input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -178,11 +188,191 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
+	cursor: pointer;
 }
 
+html {
+	background-color: #FFFEF8;
+}
+
+#filters {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+#filters button {
+	border-radius: 20px;
+	border: 1px solid #1D6154;
+	background-color: white;
+	color: #1D6154;
+	font-family: syne;
+	padding: 10px 20px
+}
+
+#filters button:hover {
+	background-color: #1D6154;
+	color: white;
+}
+
+
+/* Login Page */
+
+#login {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	margin: auto;
+	margin-top: 10% ;
+}
+
+#login h2 {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+#login-form #email{
+	width: 379px;
+}
+
+#login-form {
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+	margin-top: 0;
+}
+
+
+#forgotten-pwd{
+	text-align: center;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.label {
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+#login-error {
+	color: red;
+}
+
+
+#edit-mode {
+	background-color: black;
+	color: white;
+	padding: 15px;
+	text-align: center;
+	font-size: 1.2em;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	cursor: pointer;
+	display: none;
+}
+
+
+#edit-projects {
+	color: black;
+	font-size: small;
+	margin-left: 20px;
+	cursor: pointer;
+	display: none;
+}
+
+#edit-projects i {
+	margin-right: 5px
+}
+
+#my-projects {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 5em;
+	padding-bottom: 1em;
+}
+
+
+/* Modal */
+
+#modal {
+	height: 60%;
+	border: none;
+	border-radius: 10px;
+}
+
+#close-btn {
+	display: flex;
+	justify-content: end;
+}
+
+#modal h3 {
+	display: flex;
+	justify-content: center;
+	font-size: larger;
+	margin-top: 15px;
+}
+
+#gallery-modal {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding-top: 20px;
+}
+
+ #gallery-content {
+  position: relative;
+  width: 20%; /* Matches the image width */
+  margin: 5px;
+}
+
+#gallery-content img {
+  width: 100%; /* Makes the image fill the container */
+  display: block;
+}
+
+.fa-trash-can {
+  position: absolute;
+	color: white;
+  top: 10px; 
+  right: 10px; 
+  cursor: pointer;
+}
+
+#modal-barre {
+	margin-top: 40px;
+  width: 70%; 
+}
+
+#add-photo {
+	display: flex;
+	justify-content: center;
+	border: none;
+	padding: 10px 0;
+}
+
+#add-photo:hover {
+	background-color: #0E2F28;
+}
+
+/* Modal 2*/
+
+#form-content {
+	display: flex;
+	flex-direction: column;
+	margin: 20px 0;
+	row-gap: 20px;
+}
+
+#upload-img {
+	background-color: #E8F1F6;
+}
