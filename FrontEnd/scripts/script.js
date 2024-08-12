@@ -10,27 +10,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   fetchCategories();
 });
 
-// (1.2) FETCH CATEGORIES
-
-export async function fetchCategories() {
-  try {
-    const response = await fetch ('http://localhost:5678/api/categories');
-
-      if(!response.ok) {
-        throw new Error('Could not fetch categories')
-      } else {
-        data.categories = await response.json()
-        createFilters(data.categories); //appel à la fonction permettant la génération des boutons
-      }
-  }
-  catch (error) {
-    console.error(error);
-  }
-}
-
-
-
-
 // (1.1) FETCH API  
 
 export async function fetchWorks() {
@@ -48,6 +27,23 @@ export async function fetchWorks() {
       catch(error){ //ce bloc gère les erreurs survenue dans le bloc try
         console.error(error)
       }
+}
+// (1.2) FETCH CATEGORIES
+
+export async function fetchCategories() {
+  try {
+    const response = await fetch ('http://localhost:5678/api/categories');
+
+      if(!response.ok) {
+        throw new Error('Could not fetch categories')
+      } else {
+        data.categories = await response.json()
+        createFilters(data.categories); //appel à la fonction permettant la génération des boutons
+      }
+  }
+  catch (error) {
+    console.error(error);
+  }
 }
 
 // (1.1) DISPLAY PROJETS ARCHITECTE
@@ -86,4 +82,52 @@ export function displayWorks(works) {
       gallery.appendChild(figure);
 });*/
 
+}
+
+// (1.2) CREATION BOUTONS FILTRE
+
+function createFilters(categories) {
+
+  // création du boutons 'Tous'
+  let filters = document.getElementById('filters')
+  let filtersBtn = '';
+  filtersBtn += `<button data-category="all">Tous</button>`
+  
+ /* autre méthode pour ajouter bouton 'Tous'
+  categories.unshift({
+  id: 0,
+  name: "Tous",
+}); */
+
+  categories.forEach(category => {
+    filtersBtn += 
+    ` <button data-category="${category.id}">
+        ${category.name}
+      </button>`;
+      
+  // display les boutons filtres
+  filters.innerHTML = filtersBtn;
+});
+
+
+
+// AJOUT EVENT A CHAQUE BOUTON
+document.querySelectorAll('#filters button').forEach(button => {
+  button.addEventListener('click', (event) => {
+    const categoryId = event.target.getAttribute('data-category'); // retourne l'id du bouton selectionne
+    filterGallery(categoryId);
+  });
+});
+}
+
+
+function filterGallery(categoryId) {
+  let filteredGallery = '';
+
+    if (categoryId === 'all') {
+      filteredGallery = data.works;
+    } else {
+      filteredGallery = data.works.filter(work => work.categoryId == categoryId);
+    }
+    displayWorks(filteredGallery);
 }
