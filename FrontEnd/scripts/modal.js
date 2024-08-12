@@ -104,6 +104,8 @@ function deleteWorks() {
     });
   });
 }
+
+
 // OUVERTURE & FERMETURE MODAL
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -145,9 +147,6 @@ function secondModal() {
  
   const select = document.getElementById('work-category');
   categoriesOptions(select);
-
-
-  document.getElementById('submit-add').addEventListener('click', submitAddPhoto);
 
   document.getElementById('close-btn').addEventListener('click', function() {
     document.getElementById('dialog-content').parentElement.close(); 
@@ -215,3 +214,19 @@ function secondModal() {
   form.appendChild(validateBtn);
   modalContent.appendChild(form);
 } */
+
+function categoriesOptions(selectElement) {
+  // Ajoute l'option "Tous"
+  const categoryAll = document.createElement('option');
+  categoryAll.value = 'all';
+  categoryAll.textContent = 'Tous';
+  selectElement.appendChild(categoryAll);
+
+  // Ajoute toutes les catégories obtenues via l'API
+  data.categories.forEach(category => {
+    const option = document.createElement('option');
+    option.value = category.id;
+    option.textContent = category.name;
+    selectElement.appendChild(option);
+  });
+}
