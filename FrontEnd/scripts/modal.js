@@ -118,3 +118,100 @@ document.addEventListener("DOMContentLoaded", function () {
   // fermeture de la modale
   closeButton.onclick = () => modal.close();
 });
+
+//MODAL 2
+
+function secondModal() {
+  let modalContent = document.getElementById("dialog-content");
+  modalContent.innerHTML = ''; // vide contenu modal 1
+
+
+  modalContent.innerHTML = `
+    <span id="arrow-return"><i class="fa-solid fa-arrow-left"></i></span>
+    <span id="close-btn"><i class="fa-solid fa-xmark"></i></span>
+    <form id="second-modal">
+      <h3>Ajout photo</h3>
+      <div id="form-content"> 
+        <input type="file" id="upload-img" name="image">
+        <label>Titre<input type="text" id="work-title" name="title"></label>
+        <label>Catégorie
+          <select id="work-category" name="category">
+          </select>
+        </label>
+      </div>
+      <button type="button" id="submit-add">Valider</button>
+    </form>
+  `;
+ 
+  const select = document.getElementById('work-category');
+  categoriesOptions(select);
+
+
+  document.getElementById('submit-add').addEventListener('click', submitAddPhoto);
+
+  document.getElementById('close-btn').addEventListener('click', function() {
+    document.getElementById('dialog-content').parentElement.close(); 
+  });
+}
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById('add-photo').addEventListener('click', secondModal);
+});
+
+/* METHODE AVEC APPENCHILD
+function secondModal() {
+  let modalContent = document.getElementById("dialog-content");
+  modalContent.innerHTML = ''; // vide contenu modal 1
+
+  // création éléments modal 2
+  const form = document.createElement('form');
+  form.id = 'modal-form';
+
+  // Création du bouton pour fermer la modale
+  const arrowReturn = document.createElement("span");
+  arrowReturn.id = "arrow";
+  arrowReturn.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+
+  const addPhotoTitle = document.createElement('h3');
+  addPhotoTitle.textContent = 'Ajout photo';
+
+  const addImg = document.createElement('input');
+  addImg.type = 'file';
+  addImg.name = 'image'; 
+  addImg.id = 'upload-img';
+
+  const titleLabel = document.createElement('label');
+  titleLabel.textContent = 'Titre';
+  const titleInput = document.createElement('input');
+  titleInput.type = 'text';
+  titleInput.name = 'title';
+  titleInput.id = 'work-title';
+
+  const categoryLabel = document.createElement('label');
+  categoryLabel.textContent = 'Catégorie';
+  const categorySelect = document.createElement('select');
+  categorySelect.name = 'category';
+  categorySelect.id = 'work-category';
+
+  const validateBtn = document.createElement('button');
+  validateBtn.type = 'button'; 
+  validateBtn.textContent = 'Valider';
+  validateBtn.id = 'submit-add';
+  
+
+  // ajout des éléments à la modal
+  modalContent.appendChild(arrowReturn);
+  modalContent.appendChild(closeButton);
+  form.appendChild(addPhotoTitle);
+  form.appendChild(addImg);
+  form.appendChild(titleLabel);
+  form.appendChild(titleInput);
+  form.appendChild(categoryLabel);
+  form.appendChild(categorySelect);
+  form.appendChild(validateBtn);
+  modalContent.appendChild(form);
+} */
