@@ -52,6 +52,58 @@ function createModal() {
   document.body.appendChild(modal);
 }
 
+async function displayWorksInModal(works) {
+  let gallery = document.getElementById("gallery-modal");
+  gallery.innerHTML = ""; //supprime le contenu html dans la div gallery-js
+
+  let galleryContent = ""; //la variable va contenir le code html pour chaque travail généré
+  works.forEach((work) => {
+    galleryContent += `<div id= 'gallery-content'>
+            <span><i class="fa-solid fa-trash-can" data-id="${work.id}"></i></span>
+            <img src="${work.imageUrl}" alt="${work.title}" />
+          </div>
+          `;
+  });
+
+  gallery.innerHTML = galleryContent; //valeur de galleryContent inséré dans le HTML class gallery
+  // On ajoute les évènements de suppression.
+  deleteWorks();
+}
+
+function deleteWorks() {
+  const trashes = document.querySelectorAll(".fa-trash-can");
+  trashes.forEach((trash) => {
+    trash.addEventListener("click", function (event) {
+      
+
+      const id = event.target.dataset.id; // récupère l'ID depuis le dataset
+      const token = localStorage.getItem('token'); // récupère le token de localStorage
+
+      // Appel API pour supprimer les travaux
+      fetch(`http://localhost:5678/api/works/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // token autorisation
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to delete the work');
+        }
+        return response.json();
+      })
+      .then(() => {
+        const deletion = event.target.closest("div"); 
+        if (deletion) {
+          deletion.remove(); // supprime l'élément du DOM
+        }
+        data.works = data.works.filter((work) => work.id !== Number(id)); // met à jour le modèle de données
+      })
+      .catch(error => console.error('Error:', error));
+    });
+  });
+}
 // OUVERTURE & FERMETURE MODAL
 
 document.addEventListener("DOMContentLoaded", function () {
