@@ -1,4 +1,3 @@
-
 document.getElementById('login-form').addEventListener('submit', function(event) {
   event.preventDefault(); // empêche la page de se rafraichir suite à l'event submit
 
@@ -36,3 +35,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     errorMessage();
   });
 });
+
+
+
+

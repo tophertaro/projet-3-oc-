@@ -131,3 +131,27 @@ function filterGallery(categoryId) {
     }
     displayWorks(filteredGallery);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (localStorage.getItem('token')) {
+    document.querySelectorAll('.logged-in').forEach(element => {
+      element.style.display = 'flex';
+    });
+    document.getElementById('filters').style.display = 'none';
+    const loginBtn = document.getElementById('login-btn');
+    loginBtn.innerHTML = '<a href="#" id="logout-btn" style="text-decoration: none;">logout</a>';
+
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', (event) => {
+        event.preventDefault(); 
+        logout(); 
+      });
+    }
+  }
+});
+
+function logout() {
+  localStorage.removeItem('token'); // Supprime le jeton de localStorage
+  window.location.href = 'index.html'; // Redirige vers la page logged-out
+}
