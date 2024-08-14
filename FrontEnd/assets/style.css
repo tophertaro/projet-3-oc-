@@ -107,6 +107,10 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+#login-btn a:hover {
+	color: #B1663C;
+}
 #introduction {
 	display: flex;
 	align-items: center;
@@ -305,6 +309,7 @@ html {
 /* Modal */
 
 #modal {
+	width: 40%;
 	height: 60%;
 	border: none;
 	border-radius: 10px;
@@ -331,12 +336,12 @@ html {
 
  #gallery-content {
   position: relative;
-  width: 20%; /* Matches the image width */
+  width: 15%; 
   margin: 5px;
 }
 
 #gallery-content img {
-  width: 100%; /* Makes the image fill the container */
+  width: 100%; 
   display: block;
 }
 
@@ -373,6 +378,16 @@ html {
 	row-gap: 20px;
 }
 
-#upload-img {
+#img-upload {
 	background-color: #E8F1F6;
+	display: block;
+	
+}
+
+label {
+	flex-direction: column;
+}
+
+.fa-arrow-left, .fa-xmark {
+	cursor: pointer;
 }

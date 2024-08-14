@@ -91,7 +91,6 @@ function deleteWorks() {
         if (!response.ok) {
           throw new Error('Failed to delete the work');
         }
-        return response.json();
       })
       .then(() => {
         const deletion = event.target.closest("div"); 
@@ -129,20 +128,27 @@ function secondModal() {
 
 
   modalContent.innerHTML = `
-    <span id="arrow-return"><i class="fa-solid fa-arrow-left"></i></span>
-    <span id="close-btn"><i class="fa-solid fa-xmark"></i></span>
-    <form id="second-modal">
-      <h3>Ajout photo</h3>
-      <div id="form-content"> 
-        <input type="file" id="upload-img" name="image">
-        <label>Titre<input type="text" id="work-title" name="title"></label>
-        <label>Catégorie
-          <select id="work-category" name="category">
-          </select>
+  <span id="arrow-return"><i class="fa-solid fa-arrow-left"></i></span>
+  <span id="close-btn"><i class="fa-solid fa-xmark"></i></span>
+  <form id="second-modal">
+    <h3>Ajout photo</h3>
+    <div id="form-content"> 
+      <div id="img-upload">
+        <label for="upload-img" class="upload-label">
+          <i class="fa-solid fa-image"></i>
+          <span>+ Ajouter photo</span>
         </label>
+        <input type="file" id="upload-img" name="image" accept="image/*">
+        <p>jpg, png : 4mo max</p>
       </div>
-      <button type="button" id="submit-add">Valider</button>
-    </form>
+      <label for="work-title">Titre</label>
+      <input type="text" id="work-title" name="title">
+      <label for="work-category">Catégorie</label>
+      <select id="work-category" name="category">
+      </select>
+    </div>
+    <button type="button" id="submit-add">Valider</button>
+  </form>
   `;
  
   const select = document.getElementById('work-category');
@@ -151,12 +157,72 @@ function secondModal() {
   document.getElementById('close-btn').addEventListener('click', function() {
     document.getElementById('dialog-content').parentElement.close(); 
   });
+
+  const input = document.querySelector("#upload-img");
+  input.addEventListener("change", function() {
+    const file = input.files[0];
+    console.log(input.files);
+    console.log(file);
+    if (file.size > 4 * 1024 * 1024) {
+      alert("Merci de sélectionner un fichier de moins de 4MB.");
+      input.value = null;
+    }
+    // @TODO : Afficher l'image à la place de l'input.
+
+    // previewImage()
+  });
+
+  /*
+  function previewImage() {
+    const file = input.files[0];
+  
+    if (file.type.match("image.*")) {
+      const reader = new FileReader();
+  
+      reader.addEventListener("load", function (event) {
+        const imageUrl = event.target.result;
+  
+        image.addEventListener("load", function () {
+          for (let child of imagePreviewContainer.children) {
+            child.style.display = "none";
+          }
+          imagePreviewContainer.appendChild(image);
+        });
+  
+        image.src = imageUrl;
+        image.style.width = "129px";
+        image.style.height = "169px";
+      });
+      reader.readAsDataURL(file);
+    }
+  }
+    */
+
+  const form = document.querySelector("#second-modal");
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    // @TODO : Vérifier que les champs de soient pas vides. Sinon, interrompre l'envoi des données.
+    const formData = new FormData(form);
+    // Exemple : if (formData.get("image") && formData.get("title").trim() && formData.get("category")) {}
+    console.log(formData);
+    // @TODO : Fetch avec la méthode POST vers /works avec en body le FormData.
+    /* 
+      const response = await fetch("http://example.org/post", {
+        method: "POST",
+        body: formData,
+      });
+    */
+    // @TODO : Parser la réponse et ajouter le nouveau work à data.works (et re-générer l'affichage de la gallerie).
+    form.reset();
+  })
+
+  document.getElementById('arrow-return').addEventListener('click', function() {
+    returnToFirstModal(); // Fonction pour afficher la première modale
+  });
 }
 
 
-
-
-
+// PASSAGE MODAL 2
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('add-photo').addEventListener('click', secondModal);
 });
@@ -229,4 +295,27 @@ function categoriesOptions(selectElement) {
     option.textContent = category.name;
     selectElement.appendChild(option);
   });
+}
+
+function returnToFirstModal() {
+  let modalContent = document.getElementById("dialog-content");
+  modalContent.innerHTML = ''; // vide contenu de la seconde modale
+
+  // Code pour recharger la première modale (déjà présent dans la fonction createModal)
+  modalContent.innerHTML = `
+    <span id="close-btn"><i class="fa-solid fa-xmark"></i></span>
+    <h3>Galerie photo</h3>
+    <div id="gallery-modal"></div>
+    <hr id="modal-barre">
+    <input type="submit" id="add-photo" value="Ajouter une photo">
+  `;
+
+  document.getElementById('close-btn').addEventListener('click', function() {
+    modal.close(); 
+  });
+
+  document.getElementById('add-photo').addEventListener('click', secondModal);
+
+  // Affiche la galerie
+  displayWorksInModal(data.works);
 }

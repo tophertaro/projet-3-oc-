@@ -120,6 +120,7 @@ document.querySelectorAll('#filters button').forEach(button => {
 });
 }
 
+// FONCTION DE FILTRE
 
 function filterGallery(categoryId) {
   let filteredGallery = '';
@@ -131,6 +132,8 @@ function filterGallery(categoryId) {
     }
     displayWorks(filteredGallery);
 }
+
+// UTILISATEUR LOGGED IN
 
 document.addEventListener('DOMContentLoaded', function() {
   if (localStorage.getItem('token')) {
