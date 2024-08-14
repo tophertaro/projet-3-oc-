@@ -91,7 +91,7 @@ function createFilters(categories) {
   // création du boutons 'Tous'
   let filters = document.getElementById('filters')
   let filtersBtn = '';
-  filtersBtn += `<button data-category="all">Tous</button>`
+  filtersBtn += `<button data-category="all" class="active-category">Tous</button>`
   
  /* autre méthode pour ajouter bouton 'Tous'
   categories.unshift({
@@ -111,10 +111,20 @@ function createFilters(categories) {
 
 
 
-// AJOUT EVENT A CHAQUE BOUTON
-document.querySelectorAll('#filters button').forEach(button => {
+ // AJOUT EVENT A CHAQUE BOUTON
+ document.querySelectorAll('#filters button').forEach(button => {
   button.addEventListener('click', (event) => {
-    const categoryId = event.target.getAttribute('data-category'); // retourne l'id du bouton selectionne
+    const categoryId = event.target.getAttribute('data-category'); // retourne l'id du bouton selectionné
+    
+    // Retire la classe 'active-category' de tous les boutons
+    document.querySelectorAll('#filters button').forEach(btn => {
+      btn.classList.remove('active-category');
+  });
+
+    // Ajout 'active-category' au clic
+    event.target.classList.add('active-category');
+
+    // Filtre la galerie en fonction de la catégorie sélectionnée
     filterGallery(categoryId);
   });
 });

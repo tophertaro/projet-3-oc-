@@ -221,10 +221,13 @@ html {
 	padding: 10px 20px
 }
 
+#filters button.active-category,
 #filters button:hover {
 	background-color: #1D6154;
 	color: white;
 }
+
+
 
 
 /* Login Page */
