@@ -114,12 +114,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Ouverture de la modale lorsqu'on clique sur le bouton "Modifier"
   document.getElementById("edit-projects").onclick = function () {
+    document.body.classList.add('modal-open'); // empêche le défilement
     modal.showModal();
   // On affiche la galerie.
   displayWorksInModal(data.works);
 };
   // fermeture de la modale
-  closeButton.onclick = () => modal.close();
+  closeButton.onclick = () => {
+    document.body.classList.remove('modal-open'); // réactive le défilement
+    modal.close();
+  };
 });
 
 
@@ -164,6 +168,7 @@ function secondModal() {
   categoriesOptions(select);
 
   document.getElementById('close-btn').addEventListener('click', function() {
+    document.body.classList.remove('modal-open'); 
     document.getElementById('dialog-content').parentElement.close(); 
   });
 
@@ -320,6 +325,7 @@ function returnToFirstModal() {
   `;
 
   document.getElementById('close-btn').addEventListener('click', function() {
+    document.body.classList.remove('modal-open'); 
     modal.close(); 
   });
 

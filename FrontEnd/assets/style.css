@@ -311,6 +311,10 @@ html {
 
 /* Modal */
 
+.modal-open {
+	overflow: hidden;
+}
+
 dialog::backdrop {
 	background-color: rgba(0, 0, 0, 0.5);
 }
