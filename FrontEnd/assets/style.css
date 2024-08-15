@@ -398,7 +398,11 @@ dialog::backdrop {
 	margin: auto;
 	width: 70%;
   padding: 20px;
-  margin-bottom: 10px;
+	position: relative;
+}
+
+#img-upload img {
+	width: 40%;
 }
 
 .upload-label {
@@ -471,11 +475,15 @@ label {
 
 #work-title, 
 #work-category {
-	height: 40px;
-	border: 1px solid #ccc;
+	height: 50px;
+	border: none;
 	border-radius: 5px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	padding: 10px;
+	color: #444444;
+	font-size: 14px;
 }
+
 
 #submit-add {
 	display: flex;
@@ -492,5 +500,6 @@ label {
 	margin-top: 20px;
 	cursor: pointer;
 }
+
 
 
