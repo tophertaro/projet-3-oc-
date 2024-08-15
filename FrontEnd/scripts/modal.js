@@ -4,6 +4,7 @@ let modal = "";
 let closeButton = "";
 let addPhoto = "";
 
+
 // PARTIE MODAL
 
 function createModal() {
@@ -66,6 +67,7 @@ async function displayWorksInModal(works) {
   });
 
   gallery.innerHTML = galleryContent; //valeur de galleryContent inséré dans le HTML class gallery
+
   // On ajoute les évènements de suppression.
   deleteWorks();
 }
@@ -113,12 +115,13 @@ document.addEventListener("DOMContentLoaded", function () {
   // Ouverture de la modale lorsqu'on clique sur le bouton "Modifier"
   document.getElementById("edit-projects").onclick = function () {
     modal.showModal();
-    // On affiche la galerie.
-    displayWorksInModal(data.works);
-  };
+  // On affiche la galerie.
+  displayWorksInModal(data.works);
+};
   // fermeture de la modale
   closeButton.onclick = () => modal.close();
 });
+
 
 //MODAL 2
 
@@ -128,14 +131,16 @@ function secondModal() {
 
 
   modalContent.innerHTML = `
-  <span id="arrow-return"><i class="fa-solid fa-arrow-left"></i></span>
-  <span id="close-btn"><i class="fa-solid fa-xmark"></i></span>
+  <div id="second-modal-header">
+    <span id="arrow-return"><i class="fa-solid fa-arrow-left"></i></span>
+    <span id="close-btn"><i class="fa-solid fa-xmark"></i></span>
+  </div>
   <form id="second-modal">
     <h3>Ajout photo</h3>
     <div id="form-content"> 
       <div id="img-upload">
         <label for="upload-img" class="upload-label">
-          <i class="fa-solid fa-image"></i>
+        <i class="fa-regular fa-image"></i>
           <span>+ Ajouter photo</span>
         </label>
         <input type="file" id="upload-img" name="image" accept="image/*">
@@ -147,10 +152,14 @@ function secondModal() {
       <select id="work-category" name="category">
       </select>
     </div>
-    <button type="button" id="submit-add">Valider</button>
+    <hr id="modal-barre">
+    <div id="submit-add"> 
+      <button type="button" id="submit-btn">Valider</button>
+    </div>
   </form>
   `;
- 
+
+
   const select = document.getElementById('work-category');
   categoriesOptions(select);
 
@@ -164,7 +173,7 @@ function secondModal() {
     console.log(input.files);
     console.log(file);
     if (file.size > 4 * 1024 * 1024) {
-      alert("Merci de sélectionner un fichier de moins de 4MB.");
+      alert("L'image ne doit pas dépasser 4MB.");
       input.value = null;
     }
     // @TODO : Afficher l'image à la place de l'input.
@@ -301,7 +310,7 @@ function returnToFirstModal() {
   let modalContent = document.getElementById("dialog-content");
   modalContent.innerHTML = ''; // vide contenu de la seconde modale
 
-  // Code pour recharger la première modale (déjà présent dans la fonction createModal)
+  // Code pour recharger la première modale
   modalContent.innerHTML = `
     <span id="close-btn"><i class="fa-solid fa-xmark"></i></span>
     <h3>Galerie photo</h3>
