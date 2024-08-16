@@ -124,6 +124,14 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.remove('modal-open'); // réactive le défilement
     modal.close();
   };
+
+  // fermeture modal lors d'un clic extérieur
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      document.body.classList.remove('modal-open');
+      modal.close();
+    }
+  })
 });
 
 
