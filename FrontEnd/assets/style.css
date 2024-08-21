@@ -342,6 +342,8 @@ dialog::backdrop {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	row-gap: 20px;
+	margin: 0 50px;
 	padding-top: 20px;
 }
 

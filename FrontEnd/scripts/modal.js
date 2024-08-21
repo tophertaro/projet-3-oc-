@@ -4,7 +4,6 @@ let modal = "";
 let closeButton = "";
 let addPhoto = "";
 
-
 // PARTIE MODAL
 
 function createModal() {
@@ -134,13 +133,17 @@ document.addEventListener("DOMContentLoaded", function () {
   })
 });
 
+// PASSAGE MODALE 2
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById('add-photo').addEventListener('click', secondModal);
+});
+
 
 //MODAL 2
 
 function secondModal() {
   let modalContent = document.getElementById("dialog-content");
-  modalContent.innerHTML = ''; // vide contenu modal 1
-
+  modalContent.innerHTML = ''; // vide contenu modal 
 
   modalContent.innerHTML = `
   <div id="second-modal-header">
@@ -225,52 +228,80 @@ function secondModal() {
   modalContent.appendChild(form);
 } */
 
-
-  const select = document.getElementById('work-category');
+  
   categoriesOptions(select);
 
+  // ferme modal au clic croix 
   document.getElementById('close-btn').addEventListener('click', function() {
     document.body.classList.remove('modal-open'); 
     document.getElementById('dialog-content').parentElement.close(); 
   });
 
-  const input = document.querySelector("#upload-img");
-  input.addEventListener("change", function() { // ajout event change
-    const file = input.files[0]; // récupère le premier fichier sélectionné
+  imgInput.addEventListener("change", function() { // ajout event change
+    const file = imgInput.files[0]; // récupère le premier fichier sélectionné
 
     if (file.size > 4 * 1024 * 1024) {
       alert("L'image ne doit pas dépasser 4MB.");
-      input.value = null;
+      imgInput.value = null;
     } else {
       previewImage(file);
     }
   });
 
-  const form = document.querySelector("#second-modal");
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
-    // @TODO : Vérifier que les champs de soient pas vides. Sinon, interrompre l'envoi des données.
-    const formData = new FormData(form);
-    // Exemple : if (formData.get("image") && formData.get("title").trim() && formData.get("category")) {}
-    console.log(formData);
-    // @TODO : Fetch avec la méthode POST vers /works avec en body le FormData.
-    /* 
-      const response = await fetch("http://example.org/post", {
-        method: "POST",
-        body: formData,
-      });
-    */
-    // @TODO : Parser la réponse et ajouter le nouveau work à data.works (et re-générer l'affichage de la gallerie).
-    form.reset();
-  })
 
+  const imgInput = document.getElementById('upload-img');
+  const titleInput = document.getElementById('work-title');
+  const select = document.getElementById('work-category');
+
+  document.getElementById('submit-btn').addEventListener('click', async function(event){
+    event.preventDefault();
+    // vérifie que les champs soient bien remplis
+    if (!imgInput.files.length || !titleInput.value.trim || !select.value ) {
+      alert ('Veuillez remplir tous les champs');
+      return;
+    }
+
+    // créer un FormData à envoyer
+    const formData = new FormData();
+    formData.append('image', imgInput.files[0]);
+    formData.append('title', titleInput.value.trim());
+    formData.append('category', select.value);
+    
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch ('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'ajout du travail');
+    }
+
+    const newWork = await response.json();
+    data.works.push(newWork);
+    displayWorks(data.works);
+    displayWorksInModal(data.works)
+
+    document.getElementById('second-modal').reset(); // Réinitialiser le formulaire
+
+    } catch (error) {
+      console.error('Erreur:', error);
+      alert('Une erreur est survenue lors de l\'ajout du travail.');
+    }
+  });
+  
   // RETOUR EN ARRIERE MODAL
   document.getElementById('arrow-return').addEventListener('click', function() {
-    returnToFirstModal(); // Fonction pour afficher la première modale
+    returnToFirstModal(); // fonction pour afficher la première modale
   });
 }
 
 
+// FONCTION VISUALISATION IMAGE DANS MODAL 2
 function previewImage(file) {
   const preview = document.getElementById('img-upload');
 
@@ -290,13 +321,6 @@ function previewImage(file) {
     reader.readAsDataURL(file); // lit le contenu sous forme d'url de données
   }
 }
-
-// PASSAGE MODAL 2
-document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById('add-photo').addEventListener('click', secondModal);
-});
-
-
 
 function categoriesOptions(selectElement) {
   // Ajoute l'option "Tous"
