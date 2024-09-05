@@ -110,6 +110,7 @@ function deleteWorks() {
 function openModal() {
   document.body.classList.add('modal-open'); // Empêche le défilement de la page lorsque la modale est ouverte
   modal.showModal();
+  createModal();
   displayWorksInModal(data.works); // Affiche la galerie des travaux dans la modale
 }
 
